@@ -5,10 +5,10 @@ PWM출력으로 모터의 속력을 제어한다. */
 //boolean reverse;
 //#include <SoftwareSerial.h>
 
-int enable = 11;
-int A = 12; int B = 13; //모터뱡향제어, 0 or 1 디지탈출력 
+int En1 = 11;
+int In1 = 12; int In2 = 13; //모터뱡향제어, 0 or 1 디지탈출력 
                         //숫자는 UNO의 IDE넘버
-int C = 10; int D = 11; // PWM출력 ,숫자는 UNODML IDE넘버 
+int In4 = 10; int In3 = 11; // PWM출력 ,숫자는 UNO IDE넘버 
 
 void setup() {
 
