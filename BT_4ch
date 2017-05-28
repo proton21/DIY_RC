@@ -6,8 +6,22 @@ Center Ver=520
 -> Horizontal 0
 Center Hor = 507 
 */
-int horizontalPot = 0;
-int verticalPot = 0;
+/*     
+      
+     
+        /|3 A2(Throttle)                  /| 2 A1(Elevator)
+         |                                 | 
+      ---|------ 4 A3(Rudder)   -----------|------------ 1 A0(Ailen)
+         |                                 |
+         |                                 |
+    
+   */
+
+int Rudder = 0; ch4, A3 , horizontal
+int Throttle = 0; ch3,A2 ,vertical
+int Ailen = 0; ch1, A0, horizontal
+int Elevator = 0; ch2, A1, vertical
+
 byte commands[4] = {0x00,0x00,0x00,0x00};
 
 void setup(){
@@ -15,9 +29,52 @@ void setup(){
 }
 
 void loop(){
-  verticalPot = analogRead(0);
-  horizontalPot = analogRead(1);
+  Ailen = analogRead(0);    //Joystick analog input A0
+  Elevator = analogRead(1); //Joystick analog input A1
+  Rudder = analogRead(3);   //Joystick analog input A3
+  Throttle = analogRead(2); //Joystick analog input A2
   
+  if(Throttle >=700){  //
+    commands[0] = (byte) map(Throttle,700,1023,1,255);  //   
+  }
+  else if(Throttle <= 500){  //
+    commands[0] = (byte) map(Throttle,500,0,255,1);  //      
+  }
+  else{  //CENTER
+    commands[0] = (byte) 88;  //     
+  }
+  
+  if(Rudder >=700){  //
+    commands[1] = (byte) map(Rudder,700,1023,1,255);  //   
+  }
+  else if(Rudder <= 500){  //
+    commands[1] = (byte) map(Rudder,500,0,255,1);  //      
+  }
+  else{  //CENTER
+    commands[1] = (byte) 88;  //     
+  }
+  
+  if(Elevator >=700){  //
+    commands[2] = (byte) map(Elevator,700,1023,1,255);  //   
+  }
+  else if(Elevator <= 500){  //
+    commands[2] = (byte) map(Elevator,500,0,255,1);  //      
+  }
+  else{  //CENTER
+    commands[2] = (byte) 88;  //     
+  }
+  
+  if(Ailen >=700){  //
+    commands[2] = (byte) map(Ailen,700,1023,1,255);  //   
+  }
+  else if(Ailen <= 500){  //
+    commands[2] = (byte) map(Ailen,500,0,255,1);  //      
+  }
+  else{  //CENTER
+    commands[2] = (byte) 88;  //     
+  }
+  
+  /*
   if(verticalPot >= 700){  //FORWARD
     commands[0] = 0xf1;
     commands[1] = (byte) map(verticalPot,700,1023,1,255);  //Speed          
@@ -40,6 +97,8 @@ void loop(){
   else{  //CENTER
     commands[2] = (byte) 88;  //Angle      
   }
+  */
+  
   Serial.write(commands,4);
   delay(50); 
 }
